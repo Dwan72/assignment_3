@@ -2,12 +2,13 @@ package timeClass;
 
 public class State {
     private char c;
-    private int sum;
+    private int num;
     private int total;
 
-
-
-
+    State() {
+        this.num = 0;
+        this.total = 0;
+    }
 
     public void setC(char c) {
         this.c = c;
@@ -16,11 +17,11 @@ public class State {
         return this.c;
     }
 
-    public void setSum(int sum) {
-        this.sum = sum;
+    public void setNum(int num) {
+        this.num = num;
     }
-    public int getSum() {
-        return this.sum;
+    public int getNum() {
+        return this.num;
     }
 
     public void setTotal(int total) {
@@ -30,6 +31,19 @@ public class State {
         return this.total;
     }
 
+    public void ascendNum() {
+        this.num = 10 * this.num + this.c;
+    }
+    public void subTotal() {
+        this.total = this.total - this.num;
+    }
+    public void addTotal() {
+        this.total = this.total + this.num;
+    }
 
+    public void errorState() {
+        System.out.println("Invalid input");
+        java.lang.System.exit(1);
+    }
 
 }
