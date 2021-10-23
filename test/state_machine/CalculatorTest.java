@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-public class CalculatorStateMachineTest {
+public class CalculatorTest {
 
 	@Test
 	public void validTests() {
@@ -13,7 +13,7 @@ public class CalculatorStateMachineTest {
 		for (int i = 0; i < inputs.length; i++) {
 			int t = 0;
 			try {
-				t = CalculatorStateMachine.calculate(inputs[i], 0, 0, 0, 0);
+				t = new Calculator(inputs[i]).calculate();
 			} catch (RuntimeException e) {
 				// e.printStackTrace();
 			}
@@ -25,14 +25,14 @@ public class CalculatorStateMachineTest {
 	public void invalidStart() {
 		String inputs[] =  {"01+2", "1+02", "+2", "-2"};
 		RuntimeException ops[] = {
-				StateErrors.invalidStartOfNumber('0'),
-				StateErrors.invalidStartOfNumber('0'), 
-				StateErrors.invalidStartOfExpression('+'), 
-				StateErrors.invalidStartOfExpression('-'),
+				new StateErrors('0').invalidStartOfNumber(),
+				new StateErrors('0').invalidStartOfNumber(), 
+				new StateErrors('+').invalidStartOfExpression(), 
+				new StateErrors('-').invalidStartOfExpression(),
 		};
 		for (int i = 0; i < inputs.length; i++)
 		try {
-			CalculatorStateMachine.calculate(inputs[i], 0, 0, 0, 0);
+			new Calculator(inputs[i]).calculate();
 		} catch (RuntimeException e) {
 			assertEquals(e.getMessage(), ops[i].getMessage());
 		}
@@ -42,9 +42,9 @@ public class CalculatorStateMachineTest {
 	public void endWithAdd() {
 		String input = "2+";
 		try {
-			CalculatorStateMachine.calculate(input, 0, 0, 0, 0);
+			new Calculator(input).calculate();
 		} catch (RuntimeException e) {
-			assertEquals(e.getMessage(), StateErrors.invalidEndOfExpression('+').getMessage());
+			assertEquals(e.getMessage(), new StateErrors('+').invalidEndOfExpression().getMessage());
 		}
 	}
 	
@@ -52,9 +52,9 @@ public class CalculatorStateMachineTest {
 	public void endWithSub() {
 		String input = "2-";
 		try {
-			CalculatorStateMachine.calculate(input, 0, 0, 0, 0);
+			new Calculator(input).calculate();
 		} catch (RuntimeException e) {
-			assertEquals(e.getMessage(), StateErrors.invalidEndOfExpression('-').getMessage());
+			assertEquals(e.getMessage(), new StateErrors('-').invalidEndOfExpression().getMessage());
 		}
 	}
 	
@@ -64,9 +64,9 @@ public class CalculatorStateMachineTest {
 		char operators[] = {'+', '-', '-', '+'};
 		for (int i = 0; i < inputs.length; i++) {
 			try {
-				CalculatorStateMachine.calculate(inputs[i], 0, 0, 0, 0);
+				new Calculator(inputs[i]).calculate();
 			} catch (RuntimeException e) {
-				assertEquals(e.getMessage(), StateErrors.invalidStartOfNumber(operators[i]).getMessage());
+				assertEquals(e.getMessage(), new StateErrors(operators[i]).invalidStartOfNumber().getMessage());
 			}
 		}
 	}
@@ -77,10 +77,10 @@ public class CalculatorStateMachineTest {
 		char operators[] = {'.', '*', 'a'};
 		for (int i = 0; i < inputs.length; i++) {
 			try {
-				CalculatorStateMachine.calculate(inputs[i], 0, 0, 0, 0);
+				new Calculator(inputs[i]).calculate();
 			} catch (RuntimeException e) {
 //				System.out.println("MSG ===>" + e.getMessage() + expected);
-				assertEquals(e.getMessage(), StateErrors.unknowCharacter(operators[i]).getMessage());
+				assertEquals(e.getMessage(), new StateErrors(operators[i]).unknowCharacter().getMessage());
 			}
 		}
 	}
