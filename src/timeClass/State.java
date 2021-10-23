@@ -1,35 +1,25 @@
 package timeClass;
 
 public class State {
-    private char c;
-    private int sum;
-    private int total;
+	private int total;
 
-
-
-
-
-    public void setC(char c) {
-        this.c = c;
+    public static State State_of_C() {
+        return new State(); 
     }
-    public char getC() {
-        return this.c;
-    }
+	
+	public void setSum(int c) {
+		this.total = this.total + c;
+	}
+	
+	public void setDifference(int c) {
+		this.total = this.total - c;
+	}
 
-    public void setSum(int sum) {
-        this.sum = sum;
-    }
-    public int getSum() {
-        return this.sum;
-    }
-
-    public void setTotal(int total) {
-        this.total = total;
-    }
-    public int getTotal() {
-        return this.total;
-    }
-
-
-
+	public void setTotal(int total) {
+		this.total = total;
+	}
+	
+	public int getTotal() {
+		return this.total;
+	}
 }
