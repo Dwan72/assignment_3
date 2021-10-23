@@ -20,6 +20,10 @@ public class TokenType {
 			return new SubToken();
 		}
 		
+		if (ip == 32) {
+			return new SpaceToken();
+		}
+		
 		return new UndefinedToken();
 	}
 

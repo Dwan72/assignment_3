@@ -6,7 +6,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		String input = readEquation();
-		System.out.println(input);
+//		System.out.println(input);
 		int t;
 		try {
 			t = new Calculator(input).calculate();
